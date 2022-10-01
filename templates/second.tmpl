@@ -1,0 +1,15 @@
+{{ define "templates/second.tmpl" }}
+<html>
+  <h1>
+    {{ .Title }}
+  </h1>
+  {{ range $i, $item := .Datas }}
+    <h2>
+      {{ $item.Title }}
+    </h2>
+    <h2>
+      {{ $item.Message }}
+    </h2>
+  {{ end }}
+</html>
+{{ end }}

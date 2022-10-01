@@ -1,0 +1,24 @@
+mode: "debug"
+logPath: "c:/workspace/demogolang/logrus.log"
+tempPath: "./temp"
+mkcert:
+  cert: "c:/workspace/mkcert/localhost+2.pem"
+  key: "c:/workspace/mkcert/localhost+2-key.pem"
+connection:
+  pool:
+    maxLifetime: 1
+    maxOpenConns: 1
+    maxIdleConns: 1
+  sqlserver:
+    server: "10.10.95.31"
+    port: 1433
+    database: "Test"
+    username: "dev"
+    password: "1234"
+  postgres:
+    host: "localhost"
+    port: 5432
+    database: "DemoNetCoreDb"
+    username: "postgres"
+    password: "1234"
+    

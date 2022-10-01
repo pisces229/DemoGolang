@@ -1,0 +1,18 @@
+<html>
+{{ range $i, $title := .Title }}
+    <div>
+        Title: {{ $title.Name }}
+    </div>
+    <div>
+        Message: {{ $title.Message }}
+    </div>
+    {{ range $article := $title.Article }}
+        <div>
+            Article Name: {{ $article.Name }}
+        </div>
+        <div>
+            Article Age: {{ $article.Age }}
+        </div>
+    {{ end }}
+{{ end }}
+</html>
