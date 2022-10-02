@@ -16,6 +16,7 @@ type IDefaultLogic interface {
 	DefaultModify(context.Context) error
 	DefaultRemove(context.Context) error
 	DefaultTransaction(context.Context) error
+	DefaultQueries(context.Context) error
 }
 
 func (i *Logic) DefaultRun(ctx context.Context) error {
@@ -23,53 +24,86 @@ func (i *Logic) DefaultRun(ctx context.Context) error {
 	return i.Repository.DefaultRun(ctx)
 }
 func (i *Logic) DefaultQuery(ctx context.Context) error {
-	customers := &[]entity.Customer{}
-	err := i.Repository.DatabaseFind(ctx, entity.Customer{}, customers, []int{})
-	fmt.Println(customers)
+	persons := &[]entity.Person{}
+	err := i.Repository.DatabaseFind(ctx, entity.Person{}, persons, []int{})
+	fmt.Println(persons)
 	return err
 }
 func (i *Logic) DefaultCreate(ctx context.Context) error {
-	customer := &entity.Customer{
-		Id:       "1",
+	person := &entity.Person{
+		Id:       uuid.New().String(),
 		Name:     uuid.New().String(),
 		Age:      1,
 		Birthday: time.Now(),
 		Remark:   uuid.New().String(),
 	}
-	err := i.Repository.DatabaseCreate(ctx, customer)
-	fmt.Println(customer)
+	err := i.Repository.DatabaseCreate(ctx, person)
+	fmt.Println(person)
 	return err
 }
 func (i *Logic) DefaultModify(ctx context.Context) error {
-	customers := &[]entity.Customer{}
-	err := i.Repository.DatabaseFind(ctx, entity.Customer{}, customers, []int{1})
-	for _, customer := range *customers {
-		i.Repository.DatabaseModify(ctx, customer, entity.Customer{Remark: uuid.New().String()})
+	persons := &[]entity.Person{}
+	err := i.Repository.DatabaseFind(ctx, entity.Person{}, persons, []int{})
+	for _, person := range *persons {
+		i.Repository.DatabaseModify(ctx, &person, entity.Person{Remark: uuid.New().String()})
 	}
 	return err
 }
 func (i *Logic) DefaultRemove(ctx context.Context) error {
-	customers := &[]entity.Customer{}
-	err := i.Repository.DatabaseFind(ctx, entity.Customer{}, customers, []int{1})
-	i.Repository.DatabaseModify(ctx, customers, entity.Customer{Remark: uuid.New().String()})
+	persons := &[]entity.Person{}
+	err := i.Repository.DatabaseFind(ctx, entity.Person{}, persons, []int{})
+	i.Repository.DatabaseRemove(ctx, persons)
 	return err
 }
 func (i *Logic) DefaultTransaction(ctx context.Context) error {
 	return i.Repository.WithTransaction(ctx,
 		func(ctx context.Context, repository repository.IRepository) error {
-			customer := &entity.Customer{
-				Id:       "1",
+			person := &entity.Person{
+				Id:       uuid.New().String(),
 				Name:     uuid.New().String(),
 				Age:      1,
 				Birthday: time.Now(),
 				Remark:   uuid.New().String(),
 			}
-			if err := i.Repository.DatabaseCreate(ctx, customer); err != nil {
+			if err := i.Repository.DatabaseCreate(ctx, person); err != nil {
 				return err
 			}
-			if err := i.Repository.DatabaseCreate(ctx, customer); err != nil {
+			person.Row = 0
+			if err := i.Repository.DatabaseCreate(ctx, person); err != nil {
 				return err
 			}
 			return nil
 		})
+}
+func (i *Logic) DefaultQueries(ctx context.Context) error {
+	if data, err := i.Repository.DefaultQueryDto(ctx); err != nil {
+		return err
+	} else {
+		fmt.Println("DefaultQueryDto", data)
+	}
+	if data, err := i.Repository.DefaultQueryAdvanced(ctx); err != nil {
+		return err
+	} else {
+		fmt.Println("DefaultQueryAdvanced", data)
+	}
+	if rows, err := i.Repository.DefaultQueryRow(ctx); err != nil {
+		return err
+	} else {
+		defer func() {
+			if err := rows.Close(); err != nil {
+				fmt.Println(err)
+			}
+		}()
+		var a int32
+		var b string
+		var c string
+		for rows.Next() {
+			if err := rows.Scan(&a, &b, &c); err != nil {
+				fmt.Println(err)
+			} else {
+				fmt.Println("DefaultQueryRow", a, b, c)
+			}
+		}
+	}
+	return nil
 }

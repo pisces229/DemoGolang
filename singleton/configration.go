@@ -1,12 +1,8 @@
 package singleton
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
-
-var AppConfiguration = initConfiguration()
 
 type Configuration struct {
 	Mode     string `yaml:"mode"`
@@ -40,7 +36,6 @@ type Configuration struct {
 }
 
 func initConfiguration() (result *Configuration) {
-	fmt.Println("initConfiguration")
 	// viper.AddConfigPath("./config")
 	viper.AddConfigPath("./")
 	viper.SetConfigName("config")

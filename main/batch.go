@@ -2,9 +2,12 @@ package main
 
 import (
 	"demo.golang/run"
+	"demo.golang/singleton"
+	"fmt"
 )
 
 func batch() {
+	fmt.Println(singleton.SingletonConfiguration.Mode)
 	// flag.Parse()
 	// fmt.Println("cpuprofile:", *cpuprofile)
 	// if *cpuprofile != "" {

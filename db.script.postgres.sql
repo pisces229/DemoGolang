@@ -1,19 +1,8 @@
-CREATE TABLE customer
-(
-    row integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-    id character varying(50) NOT NULL,
-    name character varying(50) NOT NULL,
-    age integer NOT NULL,
-    birthday date NOT NULL,
-    remark character varying(100),
-    CONSTRAINT pk__customer PRIMARY KEY (row),
-    CONSTRAINT unique__customer__id UNIQUE (id)
-);
 
 CREATE TABLE person
 (
     row integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-    id character(10) NOT NULL,
+    id character(36) NOT NULL,
     name character varying(50) NOT NULL,
     age integer NOT NULL,
     birthday date NOT NULL,

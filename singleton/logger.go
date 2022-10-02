@@ -7,9 +7,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var AppLogrus = initLogrus()
-var AppLogwriter = initLogWriter()
-
 func initLogrus() (logger *logrus.Logger) {
 	fmt.Println("initLogrus")
 	logger = logrus.New()
@@ -30,12 +27,10 @@ type LogWriter struct {
 	logger *logrus.Logger
 }
 
-func (logWriter *LogWriter) Printf(format string, v ...interface{}) {
-	logstr := fmt.Sprintf(format, v...)
-	logWriter.logger.Info(logstr)
-}
-
 func initLogWriter() *LogWriter {
 	fmt.Println("initLogWriter")
-	return &LogWriter{logger: AppLogrus}
+	return &LogWriter{logger: SingletonLogrus}
+}
+func (logWriter *LogWriter) Printf(format string, v ...interface{}) {
+	logWriter.logger.Info(fmt.Sprintf(format, v...))
 }

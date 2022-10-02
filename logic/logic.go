@@ -21,8 +21,8 @@ func NewLogic() ILogic {
 }
 
 func (i *Logic) Run(ctx context.Context) error {
-	return i.Repository.WithTransaction(ctx, func(ctx context.Context, repo repository.IRepository) error {
-		return repo.Run(ctx)
-	})
-	//return i.Repository.Run(ctx)
+	//return i.Repository.WithTransaction(ctx, func(ctx context.Context, repo repository.IRepository) error {
+	//	return repo.Run(ctx)
+	//})
+	return i.Repository.Run(ctx)
 }

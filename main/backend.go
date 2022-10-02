@@ -17,7 +17,7 @@ import (
 )
 
 func backend() {
-	fmt.Println(singleton.AppConfiguration.Mode)
+	fmt.Println(singleton.SingletonConfiguration.Mode)
 
 	// gin.DisableConsoleColor()
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)

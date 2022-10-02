@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func goroutine() {
+func dmeoGoroutine() {
 	// goroutineMutex()
 	// goroutineChan()
 	// goroutineWaitGroup()

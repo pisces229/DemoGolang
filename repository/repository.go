@@ -23,7 +23,7 @@ type Repository struct {
 
 func NewRepository() IRepository {
 	return &Repository{
-		Db: singleton.AppDatabase,
+		Db: singleton.SingletonDatabase,
 	}
 }
 
@@ -40,8 +40,9 @@ func (i *Repository) WithTransaction(ctx context.Context, fn func(ctx context.Co
 
 // Run ...
 func (i *Repository) Run(ctx context.Context) error {
-	if err := i.DatabaseCreate(ctx, &entity.Customer{
-		Id:       "1",
+	personId := uuid.New().String()
+	if err := i.DatabaseCreate(ctx, &entity.Person{
+		Id:       personId,
 		Name:     uuid.New().String(),
 		Age:      1,
 		Birthday: time.Now(),
@@ -52,15 +53,15 @@ func (i *Repository) Run(ctx context.Context) error {
 	}
 
 	{
-		customers := []entity.Customer{
-			entity.Customer{
+		persons := []entity.Person{
+			entity.Person{
 				Id:       uuid.New().String(),
 				Name:     uuid.New().String(),
 				Age:      1,
 				Birthday: time.Now(),
 				Remark:   uuid.New().String(),
 			},
-			entity.Customer{
+			entity.Person{
 				Id:       uuid.New().String(),
 				Name:     uuid.New().String(),
 				Age:      1,
@@ -68,29 +69,33 @@ func (i *Repository) Run(ctx context.Context) error {
 				Remark:   uuid.New().String(),
 			},
 		}
-		if err := i.DatabaseCreate(ctx, customers); err != nil {
+		if err := i.DatabaseCreate(ctx, persons); err != nil {
 			fmt.Println(err)
 			return err
 		}
 	}
 
 	{
-		customers := &[]entity.Customer{}
-		if err := i.DatabaseFind(ctx, entity.Customer{}, customers, []int{}); err != nil {
+		persons := &[]entity.Person{}
+		if err := i.DatabaseFind(ctx, entity.Person{}, persons, []int{}); err != nil {
 			fmt.Println(err)
 			return err
 		} else {
-
-			for _, customer := range *customers {
-				i.DatabaseModify(ctx, customer, entity.Customer{Remark: uuid.New().String()})
+			for _, person := range *persons {
+				if err := i.DatabaseModify(ctx, &person, entity.Person{Remark: uuid.New().String()}); err != nil {
+					fmt.Println(err)
+					return err
+				}
 			}
-
-			i.DatabaseRemove(ctx, customers)
+			if err := i.DatabaseRemove(ctx, persons); err != nil {
+				fmt.Println(err)
+				return err
+			}
 		}
 	}
 
-	//if err := i.DatabaseCreate(ctx, &entity.Customer{
-	//	Id:       "1",
+	//if err := i.DatabaseCreate(ctx, &entity.Person{
+	//	Id:       personId,
 	//	Name:     uuid.New().String(),
 	//	Age:      1,
 	//	Birthday: time.Now(),

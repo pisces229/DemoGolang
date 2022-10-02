@@ -7,12 +7,10 @@ import (
 	"net/http"
 	"os"
 
-	"demo.golang/singleton"
 	"github.com/gin-gonic/gin"
 )
 
 func demoResponse(ginEngine *gin.Engine) {
-	singleton.AppLogrus.Info("This is [Response]!")
 	ginEngine.GET("/string", func(ginContext *gin.Context) {
 		ginContext.String(http.StatusOK, "golang")
 	})

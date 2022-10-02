@@ -17,7 +17,7 @@ type jwtAuthClaims struct {
 	UserId string `json:"userId"`
 }
 
-func dwmoJwt(ginEngine *gin.Engine) {
+func demoJwt(ginEngine *gin.Engine) {
 	ginEngine.GET("/test", func(ginContext *gin.Context) {
 		tokenString, err := jwtGenerate("admin")
 		if err != nil {
