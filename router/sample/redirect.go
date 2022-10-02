@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoRedirect(ginEngine *gin.Engine) {
+func Redirect(ginEngine *gin.Engine) {
 	ginEngine.GET("/redirect1", func(ginContext *gin.Context) {
 		ginContext.Redirect(http.StatusMovedPermanently, "http://www.google.com/")
 	})

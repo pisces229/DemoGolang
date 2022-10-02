@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func demoRequestUpload(ginEngine *gin.Engine) {
+func RequestUpload(ginEngine *gin.Engine) {
 	// Set a lower memory limit for multipart forms (default is 32 MiB)
 	ginEngine.MaxMultipartMemory = 8 << 20 // 8 MiB
 	dst := "./temp"

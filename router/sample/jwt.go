@@ -10,14 +10,51 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var jwtKey = []byte("JWT")
+func Jwt(ginEngine *gin.Engine) {
+	var jwtKey = []byte("JWT")
+	type jwtAuthClaims struct {
+		jwt.StandardClaims
+		UserId string `json:"userId"`
+	}
+	jwtGenerate := func(userId string) (string, error) {
+		// expiresAt := time.Now().Add(24 * time.Hour).Unix()
+		expiresAt := time.Now().Add(1 * time.Second).Unix()
+		token := jwt.NewWithClaims(jwt.SigningMethodHS512, jwtAuthClaims{
+			StandardClaims: jwt.StandardClaims{
+				Subject:   userId,
+				ExpiresAt: expiresAt,
+			},
+			UserId: userId,
+		})
+		tokenString, err := token.SignedString(jwtKey)
+		if err != nil {
+			return "", err
+		}
+		return tokenString, nil
+	}
+	jwtVerify := func(tokenString string) (*jwtAuthClaims, error) {
+		var claims jwtAuthClaims
+		token, err := jwt.ParseWithClaims(tokenString, &claims, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+			}
+			return jwtKey, nil
+		})
+		if token == nil {
+			return nil, err
+		} else {
+			if !token.Valid {
+				if strings.HasPrefix(err.Error(), "token is expired by") {
+					return &claims, err
+				} else {
+					return nil, err
+				}
+			} else {
+				return &claims, nil
+			}
+		}
+	}
 
-type jwtAuthClaims struct {
-	jwt.StandardClaims
-	UserId string `json:"userId"`
-}
-
-func demoJwt(ginEngine *gin.Engine) {
 	ginEngine.GET("/test", func(ginContext *gin.Context) {
 		tokenString, err := jwtGenerate("admin")
 		if err != nil {
@@ -67,44 +104,4 @@ func demoJwt(ginEngine *gin.Engine) {
 			ginContext.Status(http.StatusBadRequest)
 		}
 	})
-}
-
-func jwtGenerate(userId string) (string, error) {
-	// expiresAt := time.Now().Add(24 * time.Hour).Unix()
-	expiresAt := time.Now().Add(1 * time.Second).Unix()
-	token := jwt.NewWithClaims(jwt.SigningMethodHS512, jwtAuthClaims{
-		StandardClaims: jwt.StandardClaims{
-			Subject:   userId,
-			ExpiresAt: expiresAt,
-		},
-		UserId: userId,
-	})
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		return "", err
-	}
-	return tokenString, nil
-}
-
-func jwtVerify(tokenString string) (*jwtAuthClaims, error) {
-	var claims jwtAuthClaims
-	token, err := jwt.ParseWithClaims(tokenString, &claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return jwtKey, nil
-	})
-	if token == nil {
-		return nil, err
-	} else {
-		if !token.Valid {
-			if strings.HasPrefix(err.Error(), "token is expired by") {
-				return &claims, err
-			} else {
-				return nil, err
-			}
-		} else {
-			return &claims, nil
-		}
-	}
 }

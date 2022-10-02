@@ -1,6 +1,7 @@
 package main
 
 import (
+	"demo.golang/app"
 	"fmt"
 	"os"
 )
@@ -10,7 +11,7 @@ func main() {
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "app":
-			application()
+			app.Run()
 		case "batch":
 			batch()
 		case "backend":

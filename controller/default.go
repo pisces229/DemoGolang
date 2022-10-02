@@ -7,7 +7,6 @@ import (
 )
 
 type IDefaultController interface {
-	DefaultRouter(ginEngine *gin.Engine)
 	DefaultRun(ginContext *gin.Context)
 	DefaultQuery(ginContext *gin.Context)
 	DefaultCreate(ginContext *gin.Context)
@@ -15,13 +14,6 @@ type IDefaultController interface {
 	DefaultRemove(ginContext *gin.Context)
 }
 
-func (i *Controller) DefaultRouter(ginEngine *gin.Engine) {
-	ginEngine.GET("/default/run", i.DefaultRun)
-	ginEngine.GET("/default/query", i.DefaultQuery)
-	ginEngine.GET("/default/create", i.DefaultCreate)
-	ginEngine.GET("/default/modify", i.DefaultModify)
-	ginEngine.GET("/default/remove", i.DefaultRemove)
-}
 func (i *Controller) DefaultRun(ctx *gin.Context) {
 	if err := i.Logic.DefaultRun(ctx); err != nil {
 		fmt.Println(err)

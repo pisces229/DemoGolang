@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoSession(ginEngine *gin.Engine) {
+func Session(ginEngine *gin.Engine) {
 	store := cookie.NewStore([]byte("secret"))
 	// ginEngine.Use(sessions.Sessions("session-name", store))
 	ginEngine.Use(sessions.SessionsMany([]string{"count", "first", "second"}, store))

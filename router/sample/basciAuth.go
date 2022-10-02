@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoBasicAuth(ginEngine *gin.Engine) {
+func BasicAuth(ginEngine *gin.Engine) {
 	data := gin.H{
 		"guest": gin.H{"email": "guest@mail.com", "phone": "12345"},
 		"admin": gin.H{"email": "admin@mail.com", "phone": "67890"},

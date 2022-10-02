@@ -1,7 +1,7 @@
 package main
 
 import (
-	"demo.golang/run"
+	"demo.golang/runner"
 	"demo.golang/singleton"
 	"fmt"
 )
@@ -18,5 +18,7 @@ func batch() {
 	// 	pprof.StartCPUProfile(file)
 	// 	defer pprof.StopCPUProfile()
 	// }
-	run.Run()
+	runner := runner.NewRunner()
+	err := runner.DefaultRunner()
+	fmt.Println(err)
 }

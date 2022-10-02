@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoCookie(ginEngine *gin.Engine) {
+func Cookie(ginEngine *gin.Engine) {
 	ginEngine.GET("/cookie", func(ginContext *gin.Context) {
 		cookie, err := ginContext.Cookie("cookie")
 		if err != nil {

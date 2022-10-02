@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoResponse(ginEngine *gin.Engine) {
+func Response(ginEngine *gin.Engine) {
 	ginEngine.GET("/string", func(ginContext *gin.Context) {
 		ginContext.String(http.StatusOK, "golang")
 	})

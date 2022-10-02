@@ -14,7 +14,7 @@ type TemplateDataStruct struct {
 	Message string
 }
 
-func demoHtmlRendering(ginEngine *gin.Engine) {
+func HtmlRendering(ginEngine *gin.Engine) {
 	// ginEngine.Delims("{[{", "}]}")
 	formatAsDate := func(value time.Time) string {
 		year, month, day := value.Date()

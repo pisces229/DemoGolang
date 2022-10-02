@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoRequestGet(ginEngine *gin.Engine) {
+func RequestGet(ginEngine *gin.Engine) {
 	ginEngine.POST("/result", func(ginContext *gin.Context) {
 		ginContext.Status(http.StatusOK)
 	})

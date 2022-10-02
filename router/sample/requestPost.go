@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func demoRequestPost(ginEngine *gin.Engine) {
+func RequestPost(ginEngine *gin.Engine) {
 	ginEngine.POST("/result", func(ginContext *gin.Context) {
 		ginContext.Status(http.StatusOK)
 	})

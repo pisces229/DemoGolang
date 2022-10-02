@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func demoMiddleware(ginEngine *gin.Engine) {
+func Middleware(ginEngine *gin.Engine) {
 	defaultMiddleware := func(ginContext *gin.Context) {
 		fmt.Println("defaultMiddleware Before Next:", ginContext.FullPath())
 		ginContext.Header("X-Request-Id", uuid.New().String())

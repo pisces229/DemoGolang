@@ -16,7 +16,7 @@ func init() {
 	fmt.Println("init main 1")
 }
 
-func App() {
+func Run() {
 	fmt.Println("main")
 	// goroutine()
 }

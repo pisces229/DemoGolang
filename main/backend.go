@@ -2,8 +2,7 @@ package main
 
 import (
 	"crypto/tls"
-	"demo.golang/controller"
-	"demo.golang/sample"
+	"demo.golang/router"
 	"demo.golang/singleton"
 	"fmt"
 	"github.com/gin-contrib/cors"
@@ -62,8 +61,8 @@ func backend() {
 		}
 		ginContext.AbortWithStatus(http.StatusInternalServerError)
 	}))
-	sample.App(ginEngine)
-	controller.Router(ginEngine)
+	// router
+	router.NewRouter(ginEngine).Router()
 	// static
 	ginEngine.Static("/assets", "./assets")
 	// ginEngine.Static("/assets", "./assets")

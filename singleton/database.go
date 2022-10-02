@@ -6,7 +6,6 @@ import (
 	"os"
 	"time"
 
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
@@ -34,10 +33,10 @@ func initDatabase() *gorm.DB {
 	//dialector = sqlserver.New(sqlserver.Config{
 	//	DSN: dns,
 	//})
-	dialector = postgres.New(postgres.Config{
-		DSN: dns,
-		// PreferSimpleProtocol: true,
-	})
+	//dialector = postgres.New(postgres.Config{
+	//	DSN: dns,
+	//	// PreferSimpleProtocol: true,
+	//})
 	dbLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		// log.New(databaseLogFile, "\r\n", log.LstdFlags),
