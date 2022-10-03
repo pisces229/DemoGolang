@@ -13,30 +13,30 @@ import (
 
 func initDatabase() *gorm.DB {
 	var dns string
-	// Sqlserver
-	dns = fmt.Sprintf(
-		"Server=%s;Database=%s;User ID=%s;Password=%s;",
-		SingletonConfiguration.Connection.Sqlserver.Server,
-		SingletonConfiguration.Connection.Sqlserver.Database,
-		SingletonConfiguration.Connection.Sqlserver.Username,
-		SingletonConfiguration.Connection.Sqlserver.Password)
-	// Postgres
-	dns = fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
-		SingletonConfiguration.Connection.Postgres.Host,
-		SingletonConfiguration.Connection.Postgres.Username,
-		SingletonConfiguration.Connection.Postgres.Password,
-		SingletonConfiguration.Connection.Postgres.Database,
-		SingletonConfiguration.Connection.Postgres.Port)
-	fmt.Println(dns)
 	var dialector gorm.Dialector
-	//dialector = sqlserver.New(sqlserver.Config{
-	//	DSN: dns,
-	//})
+	// Sqlserver
+	// dns = fmt.Sprintf(
+	// 	"Server=%s;Database=%s;User ID=%s;Password=%s;",
+	// 	SingletonConfiguration.Connection.Sqlserver.Server,
+	// 	SingletonConfiguration.Connection.Sqlserver.Database,
+	// 	SingletonConfiguration.Connection.Sqlserver.Username,
+	// 	SingletonConfiguration.Connection.Sqlserver.Password)
+	// dialector = sqlserver.New(sqlserver.Config{
+	// 	DSN: dns,
+	// })
+	// Postgres
+	// dns = fmt.Sprintf(
+	// 	"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
+	// 	SingletonConfiguration.Connection.Postgres.Host,
+	// 	SingletonConfiguration.Connection.Postgres.Username,
+	// 	SingletonConfiguration.Connection.Postgres.Password,
+	// 	SingletonConfiguration.Connection.Postgres.Database,
+	// 	SingletonConfiguration.Connection.Postgres.Port)
 	//dialector = postgres.New(postgres.Config{
 	//	DSN: dns,
 	//	// PreferSimpleProtocol: true,
 	//})
+	fmt.Println(dns)
 	dbLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		// log.New(databaseLogFile, "\r\n", log.LstdFlags),

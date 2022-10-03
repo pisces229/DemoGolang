@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
+
 	"demo.golang/runner"
 	"demo.golang/singleton"
-	"fmt"
 )
 
 func batch() {
@@ -20,5 +21,5 @@ func batch() {
 	// }
 	runner := runner.NewRunner()
 	err := runner.DefaultRunner()
-	fmt.Println(err)
+	fmt.Println("batch:", err)
 }
