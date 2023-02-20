@@ -66,7 +66,8 @@ func initDatabase() *gorm.DB {
 		panic("failed to connect database")
 	}
 	if db, err := db.DB(); err != nil {
-		panic("get sql db failed:" + err.Error())
+		//panic("get sql db failed:" + err.Error())
+		fmt.Println("get sql db failed:" + err.Error())
 	} else {
 		db.SetConnMaxLifetime(time.Duration(SingletonConfiguration.Connection.Pool.MaxLifetime) * time.Second)
 		db.SetMaxIdleConns(SingletonConfiguration.Connection.Pool.MaxIdleConns)

@@ -1,6 +1,8 @@
 package app
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var initVar = func() string {
 	fmt.Println("initVar")
