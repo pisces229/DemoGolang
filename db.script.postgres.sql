@@ -17,7 +17,7 @@ CREATE TABLE address
     id character(10) NOT NULL,
     text character varying(100) NOT NULL,
     CONSTRAINT pk__address PRIMARY KEY (row),
-    CONSTRAINT fk__address_id FOREIGN KEY (id)
+    CONSTRAINT fk__address__id FOREIGN KEY (id)
         REFERENCES person (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
