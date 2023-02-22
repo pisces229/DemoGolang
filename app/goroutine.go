@@ -9,10 +9,10 @@ import (
 )
 
 func dmeoGoroutine() {
-	// goroutineMutex()
-	// goroutineChan()
-	// goroutineWaitGroup()
-	// goroutineContext()
+	//goroutineMutex()
+	//goroutineChan()
+	//goroutineWaitGroup()
+	//goroutineContext()
 }
 
 func goroutineMutex() {
@@ -22,6 +22,7 @@ func goroutineMutex() {
 		for i := 0; i < 5000; i++ {
 			mutex.Lock()
 			count++
+			//fmt.Printf("[%s][%d]\n", name, count)
 			mutex.Unlock()
 		}
 	}
@@ -33,38 +34,43 @@ func goroutineMutex() {
 }
 
 func goroutineChan() {
-	run_chan := make(chan bool)
-	done_chan := make(chan bool)
-	cancel_chan := make(chan bool)
+	runChan := make(chan bool)
+	doneChan := make(chan bool)
+	cancelChan := make(chan bool)
 	i := 0
 	producer := func() {
 		for {
+			fmt.Println("producer...")
 			select {
-			case <-cancel_chan:
+			case <-cancelChan:
 				fmt.Println("cancel")
 				return
 			case <-time.After(1 * time.Second):
 				i++
 				fmt.Println("producer:", i)
-				run_chan <- true
-				<-done_chan
+				runChan <- true
+				<-doneChan
 			}
+			fmt.Println("...producer")
 		}
 	}
 	consumer := func() {
 		for {
+			fmt.Println("consumer...")
 			select {
-			case <-run_chan:
+			case <-runChan:
 				fmt.Println("consumer:", i)
 				time.Sleep(1 * time.Second)
-				done_chan <- true
+				doneChan <- true
 			}
+			fmt.Println("...consumer")
 		}
 	}
 	go producer()
 	go consumer()
 	time.Sleep(10 * time.Second)
-	cancel_chan <- true
+	cancelChan <- true
+	time.Sleep(1 * time.Second)
 }
 
 func goroutineWaitGroup() {
@@ -76,11 +82,23 @@ func goroutineWaitGroup() {
 			count++
 		}
 	}
+
 	waitGroup.Add(3)
 	go run()
 	go run()
 	go run()
 	waitGroup.Wait()
+
+	//waitGroup.Add(1)
+	//go run()
+	//waitGroup.Wait()
+	//waitGroup.Add(1)
+	//go run()
+	//waitGroup.Wait()
+	//waitGroup.Add(1)
+	//go run()
+	//waitGroup.Wait()
+
 	fmt.Printf("[%d]\n", count)
 }
 

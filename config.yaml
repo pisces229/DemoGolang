@@ -10,15 +10,15 @@ connection:
     maxOpenConns: 1
     maxIdleConns: 1
   sqlserver:
-    server: "10.10.95.31"
+    server: "localhost"
     port: 1433
-    database: "Test"
-    username: "dev"
-    password: "1234"
+    database: "mssql"
+    username: "sa"
+    password: "1qaz!QAZ"
   postgres:
     host: "localhost"
     port: 5432
-    database: "DemoNetCoreDb"
+    database: "postgres"
     username: "postgres"
-    password: "1234"
+    password: "1qaz!QAZ"
     

@@ -1,11 +1,9 @@
 package runner
 
-import (
-	"demo.golang/logic"
-)
+import "context"
 
-func (i *Runner) DefaultRunner() error {
-	err := logic.NewLogic().Run(i.Context)
-	//err := logic.NewLogic().DefaultQueries(i.Context)
+func (i *Runner) DefaultRunner(ctx context.Context) error {
+	err := i.Logic.Run(ctx)
+	//err := i.Logic.DefaultQueries(ctx)
 	return err
 }

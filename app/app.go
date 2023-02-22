@@ -18,5 +18,6 @@ func init() {
 
 func Run() {
 	fmt.Println("main")
-	// goroutine()
+	//dmeoGoroutine()
+	//demoReflect()
 }

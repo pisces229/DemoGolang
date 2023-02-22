@@ -6,17 +6,15 @@ import (
 )
 
 type IRunner interface {
-	DefaultRunner() error
+	DefaultRunner(context.Context) error
 }
 
 type Runner struct {
-	Context context.Context
-	Logic   logic.ILogic
+	Logic logic.ILogic
 }
 
 func NewRunner() IRunner {
 	return &Runner{
-		Context: context.TODO(),
-		Logic:   logic.NewLogic(),
+		Logic: logic.NewLogic(),
 	}
 }

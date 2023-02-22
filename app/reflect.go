@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-func init() {
+func demoReflect() {
 	value := FirstStruct{
 		"a1",
 		SecondStruct{"a2"},

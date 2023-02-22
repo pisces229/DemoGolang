@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
-
+	"context"
 	"demo.golang/runner"
 	"demo.golang/singleton"
+	"fmt"
 )
 
 func batch() {
@@ -20,6 +20,15 @@ func batch() {
 	// 	defer pprof.StopCPUProfile()
 	// }
 	runner := runner.NewRunner()
-	err := runner.DefaultRunner()
+
+	ctx := context.TODO()
+	//ctx := context.Background()
+	//ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(3 * time.Second))
+	//defer cancel()
+
+	err := runner.DefaultRunner(ctx)
 	fmt.Println("batch:", err)
+
+	//go runner.DefaultRunner(ctx)
+	//time.Sleep(5 * time.Second)
 }

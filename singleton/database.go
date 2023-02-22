@@ -14,6 +14,7 @@ import (
 func initDatabase() *gorm.DB {
 	var dns string
 	var dialector gorm.Dialector
+
 	// Sqlserver
 	// dns = fmt.Sprintf(
 	// 	"Server=%s;Database=%s;User ID=%s;Password=%s;",
@@ -24,18 +25,20 @@ func initDatabase() *gorm.DB {
 	// dialector = sqlserver.New(sqlserver.Config{
 	// 	DSN: dns,
 	// })
+
 	// Postgres
-	// dns = fmt.Sprintf(
-	// 	"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
-	// 	SingletonConfiguration.Connection.Postgres.Host,
-	// 	SingletonConfiguration.Connection.Postgres.Username,
-	// 	SingletonConfiguration.Connection.Postgres.Password,
-	// 	SingletonConfiguration.Connection.Postgres.Database,
-	// 	SingletonConfiguration.Connection.Postgres.Port)
+	//dns = fmt.Sprintf(
+	//	"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
+	//	SingletonConfiguration.Connection.Postgres.Host,
+	//	SingletonConfiguration.Connection.Postgres.Username,
+	//	SingletonConfiguration.Connection.Postgres.Password,
+	//	SingletonConfiguration.Connection.Postgres.Database,
+	//	SingletonConfiguration.Connection.Postgres.Port)
 	//dialector = postgres.New(postgres.Config{
 	//	DSN: dns,
 	//	// PreferSimpleProtocol: true,
 	//})
+
 	fmt.Println(dns)
 	dbLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
