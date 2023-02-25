@@ -3,19 +3,18 @@ package app
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"sync"
 	"time"
 )
 
-func dmeoGoroutine() {
-	//goroutineMutex()
-	//goroutineChan()
-	//goroutineWaitGroup()
-	//goroutineContext()
+func demoGoroutine() {
+	//demoGoroutineMutex()
+	//demoGoroutineChan()
+	//demoGoroutineWaitGroup()
+	demoGoroutineContext()
 }
 
-func goroutineMutex() {
+func demoGoroutineMutex() {
 	var count int32 = 0
 	var mutex sync.Mutex
 	run := func(name string) {
@@ -33,7 +32,7 @@ func goroutineMutex() {
 	fmt.Printf("[%d]\n", count)
 }
 
-func goroutineChan() {
+func demoGoroutineChan() {
 	runChan := make(chan bool)
 	doneChan := make(chan bool)
 	cancelChan := make(chan bool)
@@ -73,7 +72,7 @@ func goroutineChan() {
 	time.Sleep(1 * time.Second)
 }
 
-func goroutineWaitGroup() {
+func demoGoroutineWaitGroup() {
 	var count int32 = 0
 	var waitGroup sync.WaitGroup
 	run := func() {
@@ -102,32 +101,33 @@ func goroutineWaitGroup() {
 	fmt.Printf("[%d]\n", count)
 }
 
-func goroutineContext() {
-	var waitGroup sync.WaitGroup
-	run := func(root context.Context, name string, timeout bool) {
-		ctx, cancel := context.WithTimeout(root, 3*time.Second)
-		defer waitGroup.Done()
-		defer cancel()
-		if timeout {
-			time.Sleep(4 * time.Second)
-		} else {
-			time.Sleep(2 * time.Second)
-		}
-		select {
-		case <-ctx.Done():
-			fmt.Printf("[%s][%s]\n", name, strconv.FormatBool(false))
-			return
-		default:
-			fmt.Printf("[%s][%s]\n", name, strconv.FormatBool(true))
-			return
+func demoGoroutineContext() {
+	run := func(root context.Context, name string, second int) {
+		//select {
+		//case <-root.Done():
+		//	fmt.Printf("[%s][Done]\n", name)
+		//	return
+		//default:
+		//	time.Sleep(time.Duration(second) * time.Second)
+		//	fmt.Printf("[%s][Doing]\n", name)
+		//	return
+		//}
+		for {
+			select {
+			case <-root.Done():
+				fmt.Printf("[%10s][Done]\n", name)
+				return
+			default:
+				fmt.Printf("[%10s][Doing]\n", name)
+				time.Sleep(500 * time.Millisecond)
+			}
 		}
 	}
 	// root := context.Background()
 	root, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
-	waitGroup.Add(3)
-	go run(root, "first", false)
-	go run(root, "second", true)
-	go run(root, "third", false)
-	waitGroup.Wait()
+	go run(root, "first", 1)
+	go run(root, "second", 2)
+	go run(root, "third", 3)
+	time.Sleep(2 * time.Second)
 }

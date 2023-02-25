@@ -10,5 +10,8 @@ var initVar = func() string {
 }()
 
 func init() {
-	fmt.Println("init")
+	fmt.Println("init main 0")
+}
+func init() {
+	fmt.Println("init main 1")
 }
