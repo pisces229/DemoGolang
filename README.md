@@ -121,3 +121,5 @@ indirect 代表被間接導入的依賴包
 [Gin with Logger](https://ithelp.ithome.com.tw/articles/10280560)
 
 [excelize](https://github.com/qax-os/excelize)
+
+[Getting Started](https://pjchender.dev/golang/go-getting-started/)
