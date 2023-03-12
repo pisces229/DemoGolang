@@ -9,12 +9,13 @@ import (
 )
 
 func Middleware(ginEngine *gin.Engine) {
+	// global
 	defaultMiddleware := func(ginContext *gin.Context) {
 		fmt.Println("defaultMiddleware Before Next:", ginContext.FullPath())
 		ginContext.Header("X-Request-Id", uuid.New().String())
 		ginContext.Next()
-		fmt.Println("defaultMiddleware After Next:", ginContext.FullPath())
 		ginContext.Header("X-Response-Id", uuid.New().String())
+		fmt.Println("defaultMiddleware After Next:", ginContext.FullPath())
 	}
 	ginEngine.Use(defaultMiddleware)
 	ginEngine.GET("/middleware", func(ginContext *gin.Context) {
@@ -30,6 +31,7 @@ func Middleware(ginEngine *gin.Engine) {
 	}, func(ginContext *gin.Context) {
 		fmt.Println("3 Middle Before Next")
 		ginContext.Next()
+		//ginContext.Abort()
 		fmt.Println("3 Middle After Next")
 	}, func(ginContext *gin.Context) {
 		ginContext.String(http.StatusOK, "middleware")

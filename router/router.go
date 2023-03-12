@@ -2,7 +2,6 @@ package router
 
 import (
 	"demo.golang/controller"
-	"demo.golang/router/sample"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +16,8 @@ type Router struct {
 }
 
 func (i *Router) Router() {
-	sample.Middleware(i.Engine)
+	//sample.Middleware(i.Engine)
+	//sample.Handler(i.Engine)
 	//sample.Session(i.Engine)
 	//sample.Cookie(i.Engine)
 	//sample.Jwt(i.Engine)
