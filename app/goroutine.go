@@ -9,9 +9,9 @@ import (
 
 func demoGoroutine() {
 	//demoGoroutineMutex()
-	//demoGoroutineChan()
+	demoGoroutineChan()
 	//demoGoroutineWaitGroup()
-	demoGoroutineContext()
+	//demoGoroutineContext()
 }
 
 func demoGoroutineMutex() {
@@ -102,26 +102,27 @@ func demoGoroutineWaitGroup() {
 }
 
 func demoGoroutineContext() {
-	run := func(root context.Context, name string, second int) {
-		//select {
-		//case <-root.Done():
-		//	fmt.Printf("[%s][Done]\n", name)
-		//	return
-		//default:
-		//	time.Sleep(time.Duration(second) * time.Second)
-		//	fmt.Printf("[%s][Doing]\n", name)
-		//	return
-		//}
-		for {
-			select {
-			case <-root.Done():
-				fmt.Printf("[%10s][Done]\n", name)
-				return
-			default:
-				fmt.Printf("[%10s][Doing]\n", name)
-				time.Sleep(500 * time.Millisecond)
-			}
+	run := func(root context.Context, name string, millisecond int) {
+		select {
+		case <-root.Done():
+			fmt.Printf("[%s][Done!]\n", name)
+			return
+		default:
+			time.Sleep(time.Duration(millisecond) * time.Millisecond)
+			fmt.Printf("[%s][Doing...]\n", name)
+			return
 		}
+
+		//for {
+		//	select {
+		//	case <-root.Done():
+		//		fmt.Printf("[%10s][Done!]\n", name)
+		//		return
+		//	default:
+		//		fmt.Printf("[%10s][Doing...]\n", name)
+		//		time.Sleep(500 * time.Millisecond)
+		//	}
+		//}
 	}
 	// root := context.Background()
 	root, cancel := context.WithTimeout(context.Background(), 1*time.Second)
@@ -129,5 +130,5 @@ func demoGoroutineContext() {
 	go run(root, "first", 1)
 	go run(root, "second", 2)
 	go run(root, "third", 3)
-	time.Sleep(2 * time.Second)
+	time.Sleep(2500 * time.Millisecond)
 }
