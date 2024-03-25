@@ -49,6 +49,8 @@ func demoGoroutineChan() {
 				fmt.Println("producer:", i)
 				runChan <- true
 				<-doneChan
+				//default:
+				//	fmt.Println("producer.default")
 			}
 			fmt.Println("...producer")
 		}
@@ -61,6 +63,8 @@ func demoGoroutineChan() {
 				fmt.Println("consumer:", i)
 				time.Sleep(1 * time.Second)
 				doneChan <- true
+				//default:
+				//	fmt.Println("consumer.default")
 			}
 			fmt.Println("...consumer")
 		}

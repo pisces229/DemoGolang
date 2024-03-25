@@ -8,7 +8,7 @@ CREATE TABLE person
     birthday date NOT NULL,
     remark character varying(100),
     CONSTRAINT pk__person PRIMARY KEY (row),
-    CONSTRAINT unique__person__id UNIQUE (id)
+    CONSTRAINT uk__person__id UNIQUE (id)
 );
 
 CREATE TABLE address
